@@ -28,6 +28,7 @@ function ShowMemo({ memo }) {
         style={{
           position: "relative",
           left: "100px",
+          backgroundColor: "red",
         }}
       >
         삭제
