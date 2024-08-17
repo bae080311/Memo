@@ -10,10 +10,14 @@ const TextArea = styled.textarea`
   font-size: 1.2rem;
 `;
 
-export default function Write() {
+export default function Write({ value, onChange }) {
   return (
     <div>
-      <TextArea placeholder="메모를 작성하세요." />
+      <TextArea
+        value={value}
+        onChange={onChange}
+        placeholder="메모를 작성하세요."
+      />
     </div>
   );
 }
