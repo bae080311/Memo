@@ -24,6 +24,14 @@ function ShowMemo({ memo }) {
       }}
     >
       <p>{memo.content}</p>
+      <Button
+        style={{
+          position: "relative",
+          left: "100px",
+        }}
+      >
+        삭제
+      </Button>
     </Container>
   );
 }
