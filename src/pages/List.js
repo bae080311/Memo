@@ -76,8 +76,8 @@ function List() {
             <Button
               onClick={() => handleDelete(memo.id)}
               style={{
-                position: "relative",
-                left: "100px",
+                position: "absolute",
+                left: "900px",
                 backgroundColor: "red",
               }}
             >
