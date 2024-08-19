@@ -7,7 +7,7 @@ import axios from "axios";
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column; /* 수정: 수직 정렬을 위한 flex-direction 추가 */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 50%;
@@ -16,28 +16,7 @@ const Container = styled.div`
   color: white;
 `;
 
-function ShowMemo({ memo }) {
-  return (
-    <Container
-      style={{
-        flexDirection: "row",
-      }}
-    >
-      <p>{memo.content}</p>
-      <Button
-        style={{
-          position: "relative",
-          left: "100px",
-          backgroundColor: "red",
-        }}
-      >
-        삭제
-      </Button>
-    </Container>
-  );
-}
-
-export default function List() {
+function List() {
   const [memos, setMemos] = useState([]);
   const navigate = useNavigate();
 
@@ -56,6 +35,22 @@ export default function List() {
     getMemo();
   }, []);
 
+  const handleDelete = (id) => {
+    const confirmed = window.confirm("정말 삭제하시겠습니까?");
+    if (confirmed) {
+      axios
+        .delete(`http://localhost:5000/memos/${id}`)
+        .then((response) => {
+          console.log("Memo deleted", response);
+          setMemos(memos.filter((memo) => memo.id !== id)); // 로컬 상태에서 삭제
+          alert("삭제되었습니다"); // 삭제 완료 메시지
+        })
+        .catch((error) => {
+          console.error("There was an error deleting the memo!", error);
+        });
+    }
+  };
+
   return (
     <div className="App">
       <Title />
@@ -65,7 +60,19 @@ export default function List() {
         }}
       >
         {memos.map((memo) => (
-          <ShowMemo key={memo.id} memo={memo} />
+          <Container key={memo.id} style={{ flexDirection: "row" }}>
+            <p>{memo.content}</p>
+            <Button
+              onClick={() => handleDelete(memo.id)} // 삭제 클릭 시 handleDelete 호출
+              style={{
+                position: "relative",
+                left: "100px",
+                backgroundColor: "red",
+              }}
+            >
+              삭제
+            </Button>
+          </Container>
         ))}
       </Container>
       <Button
@@ -83,3 +90,5 @@ export default function List() {
     </div>
   );
 }
+
+export default List;
