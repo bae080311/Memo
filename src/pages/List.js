@@ -10,10 +10,12 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 600px;
   height: 70%;
-  background-color: purple;
-  color: white;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  border: 2px solid black;
 `;
 
 function List() {
@@ -42,8 +44,8 @@ function List() {
         .delete(`http://localhost:5000/memos/${id}`)
         .then((response) => {
           console.log("Memo deleted", response);
-          setMemos(memos.filter((memo) => memo.id !== id)); // 로컬 상태에서 삭제
-          alert("삭제되었습니다"); // 삭제 완료 메시지
+          setMemos(memos.filter((memo) => memo.id !== id));
+          alert("삭제되었습니다");
         })
         .catch((error) => {
           console.error("There was an error deleting the memo!", error);
@@ -56,14 +58,23 @@ function List() {
       <Title />
       <Container
         style={{
-          marginLeft: "25%",
+          borderBottom: "none",
+          marginLeft: "30%",
         }}
       >
         {memos.map((memo) => (
-          <Container key={memo.id} style={{ flexDirection: "row" }}>
+          <Container
+            key={memo.id}
+            style={{
+              flexDirection: "row",
+              borderTop: "none",
+              borderLeft: "none",
+              borderRight: "none",
+            }}
+          >
             <p>{memo.content}</p>
             <Button
-              onClick={() => handleDelete(memo.id)} // 삭제 클릭 시 handleDelete 호출
+              onClick={() => handleDelete(memo.id)}
               style={{
                 position: "relative",
                 left: "100px",
